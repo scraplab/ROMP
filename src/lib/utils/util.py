@@ -866,3 +866,4 @@ def get_rectangle_intersect_ratio(lt0, rb0, lt1, rb1):
         return 0.0
     else:
         return 1.0 * get_rectangle_area(lt0, rb0) / get_rectangle_area(lt1, rb1)
+
