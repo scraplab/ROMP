@@ -35,23 +35,23 @@ def check_data_files(prompt_confirmation=False):
             confirmed = True
         if confirmed:
             errors = {}
-                fname = 'ROMP_data.zip'
-                dest_path = ROMP_DATA_DIR.joinpath(fname)
-                print(f"downloading {fname} ...")
-                try:
-                    download_from_gdrive(gdrive_id, dest_path)
-                except (MissingSchema, OSError) as e:
-                    errors[item[0]] = e
+            fname = 'ROMP_data.zip'
+            dest_path = ROMP_DATA_DIR.joinpath(fname)
+            print(f"downloading {fname} ...")
+            try:
+                download_from_gdrive(gdrive_id, dest_path)
+            except (MissingSchema, OSError) as e:
+                errors[item[0]] = e
             if any(errors):
                 print(
                     f"Failed to download {len(errors)} files. See stack "
                     f"trace{'s' if len(errors) > 1 else ''} below for "
                     "more info:\n"
                 )
-                for fname, e in errors.items():
-                    print(f"{fname.upper()}:")
-                    traceback.print_exception(type(e), e, e.__traceback__)
-                    print('=' * 40, end='\n\n')
+            for fname, e in errors.items():
+                print(f"{fname.upper()}:")
+                traceback.print_exception(type(e), e, e.__traceback__)
+                print('=' * 40, end='\n\n')
         else:
             warnings.warn(
                 "missing required files. Some Psypose "
