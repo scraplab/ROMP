@@ -19,3 +19,4 @@ transforms3d
 bvhtoolbox
 smplx
 vedo
+numpy==1.20.0
