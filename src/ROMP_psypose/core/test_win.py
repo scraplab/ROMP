@@ -28,7 +28,9 @@ class Demo(Base):
         internet_loader = self._create_single_data_loader(dataset='internet',train_flag=False, image_folder=image_folder)
         counter.start()
         with torch.no_grad():
-            for test_iter,meta_data in enumerate(internet_loader):
+            internetenum = enumerate(internet_loader)
+            for test_iter,meta_data in internetenum:
+                print("1")
                 outputs = self.net_forward(meta_data, cfg=self.demo_cfg)
                 reorganize_idx = outputs['reorganize_idx'].cpu().numpy()
                 counter.count()
@@ -108,7 +110,7 @@ class Demo(Base):
             frame = capture.read()
             with torch.no_grad():
                 outputs = self.single_image_forward(frame)
-            vis_dict = {'image_org': outputs['meta_data']['image_org'].cpu()}
+            vis_dict = {'image_org': outputs['meta_data']['image_org'].cpu(), 'imgpath':video_file_path}
             img_paths = [str(frame_id) for _ in range(1)]
             single_batch_results = self.reorganize_results(outputs,img_paths,outputs['reorganize_idx'].cpu().numpy())
             results.update(single_batch_results)
@@ -214,7 +216,8 @@ class Time_counter():
         self.frame_num = 0
 
 def main():
-    with ConfigContext(parse_args()):
+    configcontext = ConfigContext(parse_args())
+    with configcontext :
         demo = Demo()
         if args().webcam:
             print('Running the code on webcam demo')
@@ -232,9 +235,5 @@ def main():
                 demo_image_folder = os.path.join(demo.demo_dir,'images')
             demo.run(demo_image_folder)
 
-def estimate_pose(pose):
-    input_video_path = pose.vid_path
-    estimator = Demo()
-    estimator.output_dir = pose.output_path
-    results = estimator.process_video(input_video_path)
-    return results
+if __name__ == '__main__':
+    main()

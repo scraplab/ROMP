@@ -2,6 +2,6 @@ __author__ = """Landry Bulls """
 __email__ = 'Landry.S.Bulls@Dartmouth.edu'
 __all__ = ['configs', 'core', 'lib']
 
-from ROMP_psypose.core.check_files import check_data_files
+from ROMP_psypose.core.check_files import get_ROMP_files
 
-check_data_files()
+get_ROMP_files()

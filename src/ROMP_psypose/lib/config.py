@@ -6,14 +6,23 @@ import torch
 import yaml
 import time
 
-code_dir = os.path.abspath(__file__).replace('config.py','')
-project_dir = os.path.abspath(__file__).replace('/src/lib/config.py','')
+from ROMP_psypose.core.check_files import ROMP_DATA_DIR
+
+data_dir = ROMP_DATA_DIR.joinpath('ROMP_data')
+code_dir = os.path.abspath(__file__).replace('config.py','') # lib
+project_dir = os.path.abspath(__file__).replace('/src/ROMP_psypose/lib/config.py','') # ROMP
 root_dir = project_dir.replace(project_dir.split('/')[-1],'')#os.path.abspath(__file__).replace('/CenterMesh/src/config.py','')
-model_dir = os.path.join(project_dir,'models')
-trained_model_dir = os.path.join(project_dir,'trained_models')
+model_dir = data_dir
+trained_model_dir = os.path.join(data_dir,'trained_models')
 
 time_stamp = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(int(round(time.time()*1000))/1000))
 yaml_timestamp = "configs/active_context_{}.yaml".format(time_stamp)
+
+if torch.cuda.is_available():
+    gpu_val = 0
+else:
+    print('No GPU detected by PyTorch. Pose estimation will be performed using CPU.')
+    gpu_val = -1
 
 def parse_args(input_args=None):
     parser = argparse.ArgumentParser(description = 'ROMP: Monocular, One-stage, Regression of Multiple 3D People')
@@ -74,9 +83,9 @@ def parse_args(input_args=None):
     smpl_group = parser.add_argument_group(title='SMPL options')
     #smpl info
     smpl_group.add_argument('--total-param-count',type = int,default = 85, help = 'the count of param param')
-    smpl_group.add_argument('--smpl-mean-param-path',type = str,default = os.path.join(model_dir,'satistic_data','neutral_smpl_mean_params.h5'),
+    smpl_group.add_argument('--smpl-mean-param-path',type = str,default = os.path.join(data_dir,'satistic_data','neutral_smpl_mean_params.h5'),
         help = 'the path for mean smpl param value')
-    smpl_group.add_argument('--smpl-model',type = str,default = os.path.join(model_dir,'statistic_data','neutral_smpl_with_cocoplus_reg.txt'),
+    smpl_group.add_argument('--smpl-model',type = str,default = os.path.join(data_dir,'statistic_data','neutral_smpl_with_cocoplus_reg.txt'),
         help = 'smpl model path')
 
     smplx_group = parser.add_argument_group(title='SMPL-X options')
@@ -84,12 +93,12 @@ def parse_args(input_args=None):
     smpl_group.add_argument('--cam_dim',type = int,default = 3, help = 'the dimention of camera param')
     smpl_group.add_argument('--beta_dim',type = int,default = 10, help = 'the dimention of SMPL shape param, beta')
     smpl_group.add_argument('--smpl_joint_num',type = int,default = 22)
-    smpl_group.add_argument('--smpl_model_path',type = str,default = os.path.join(model_dir),help = 'smpl model path')
-    smpl_group.add_argument('--smpl_uvmap',type = str,default = os.path.join(model_dir, 'smpl', 'uv_table.npy'),help = 'smpl UV Map coordinates for each vertice')
-    smpl_group.add_argument('--smpl_female_texture',type = str,default = os.path.join(model_dir, 'smpl', 'SMPL_sampleTex_f.jpg'),help = 'smpl UV texture for the female')
-    smpl_group.add_argument('--smpl_male_texture',type = str,default = os.path.join(model_dir, 'smpl', 'SMPL_sampleTex_m.jpg'),help = 'smpl UV texture for the male')
-    smpl_group.add_argument('--smpl_J_reg_h37m_path',type = str,default = os.path.join(model_dir, 'smpl', 'J_regressor_h36m.npy'),help = 'SMPL regressor for 17 joints from H36M datasets')
-    smpl_group.add_argument('--smpl_J_reg_extra_path',type = str,default = os.path.join(model_dir, 'smpl', 'J_regressor_extra.npy'),help = 'SMPL regressor for 9 extra joints from different datasets')
+    smpl_group.add_argument('--smpl_model_path',type = str,default = os.path.join(data_dir),help = 'smpl model path')
+    smpl_group.add_argument('--smpl_uvmap',type = str,default = os.path.join(data_dir, 'smpl', 'uv_table.npy'),help = 'smpl UV Map coordinates for each vertice')
+    smpl_group.add_argument('--smpl_female_texture',type = str,default = os.path.join(data_dir, 'smpl', 'SMPL_sampleTex_f.jpg'),help = 'smpl UV texture for the female')
+    smpl_group.add_argument('--smpl_male_texture',type = str,default = os.path.join(data_dir, 'smpl', 'SMPL_sampleTex_m.jpg'),help = 'smpl UV texture for the male')
+    smpl_group.add_argument('--smpl_J_reg_h37m_path',type = str,default = os.path.join(data_dir, 'smpl', 'J_regressor_h36m.npy'),help = 'SMPL regressor for 17 joints from H36M datasets')
+    smpl_group.add_argument('--smpl_J_reg_extra_path',type = str,default = os.path.join(data_dir, 'smpl', 'J_regressor_extra.npy'),help = 'SMPL regressor for 9 extra joints from different datasets')
 
     parsed_args = parser.parse_args(args=input_args)
     parsed_args.kernel_sizes = [5]
@@ -101,7 +110,7 @@ def parse_args(input_args=None):
         else:
             exec("parsed_args.{} = {}".format(key, value))
 
-    hrnet_pretrain = os.path.join(project_dir,'trained_models/pretrain.pkl') #os.path.join(model_dir,'pretrain_models','pose_higher_hrnet_w32_512.pth') #
+    hrnet_pretrain = os.path.join(project_dir,'trained_models/pretrain.pkl') #os.path.join(data_dir,'pretrain_models','pose_higher_hrnet_w32_512.pth') #
     parsed_args.tab = '{}_cm{}_{}'.format(parsed_args.backbone,
                                           parsed_args.centermap_size,
                                           parsed_args.tab)

@@ -66,19 +66,19 @@ ROMP_DATA_DIR = Path('~/.ROMP').expanduser()
 #             )
 
 
-def move_romp_files(extracted_dir):
-    extracted_dir = Path(extracted_dir)
-    smpl_files = Path(os.path.join(extracted_dir, 'smpl')).iterdir()
-    # transfer all files in smpl dir to the correct ROMP dir within psypose
-    for src in smpl_files:
-        fname = src.name
-        dest = ROMP_DATA_DIR.joinpath('models', 'smpl', fname)
-        src.rename(dest)
-    # move the trained_models dir to the correct ROMP dir within psypose
-    trained_models = Path(os.path.join(extracted_dir, 'trained_models'))
-    dest = ROMP_DATA_DIR.joinpath(trained_models.name)
-    trained_models.rename(dest)
-    shutil.rmtree(extracted_dir)
+# def move_romp_files(extracted_dir):
+#     extracted_dir = Path(extracted_dir)
+#     smpl_files = Path(os.path.join(extracted_dir, 'smpl')).iterdir()
+#     # transfer all files in smpl dir to the correct ROMP dir within psypose
+#     for src in smpl_files:
+#         fname = src.name
+#         dest = ROMP_DATA_DIR.joinpath('models', 'smpl', fname)
+#         src.rename(dest)
+#     # move the trained_models dir to the correct ROMP dir within psypose
+#     trained_models = Path(os.path.join(extracted_dir, 'trained_models'))
+#     dest = ROMP_DATA_DIR.joinpath(trained_models.name)
+#     trained_models.rename(dest)
+#     shutil.rmtree(extracted_dir)
 
 
 # def get_ROMP_files(gdrive_id, dest_path):
@@ -92,12 +92,16 @@ def move_romp_files(extracted_dir):
 #     dest_path.unlink()
 
 def get_ROMP_files():
-    url = f"https://drive.google.com/uc?id={gdrive_id}"
-    dest_path = ROMP_DATA_DIR.join('ROMP_data.zip')
-    gdown.download(url, str(dest_path), quiet=False)
-    print("extracting {dest_path} ...")
-    z = zipfile.ZipFile(str(dest_path))
-    z.extractall(ROMP_DATA_DIR)
-    #move_romp_files(os.path.join(ROMP_DATA_DIR, 'ROMP_data'))
-    print(f"removing {dest_path} ...")
-    dest_path.unlink()
+    if os.path.isdir(str(ROMP_DATA_DIR.joinpath('ROMP_data/smpl'))):
+        None
+    else:
+        url = f"https://drive.google.com/uc?id={gdrive_id}"
+        if not os.path.exists(str(ROMP_DATA_DIR)):
+            os.mkdir(ROMP_DATA_DIR)
+        dest_path = ROMP_DATA_DIR.joinpath('ROMP_data.zip')
+        gdown.download(url, str(dest_path), quiet=False)
+        print("extracting {dest_path} ...")
+        z = zipfile.ZipFile(str(dest_path))
+        z.extractall(ROMP_DATA_DIR)
+        print(f"removing {dest_path} ...")
+        dest_path.unlink()
