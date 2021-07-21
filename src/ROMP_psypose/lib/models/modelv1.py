@@ -43,7 +43,7 @@ class ROMP(Base):
 
     def _build_head(self):
         self.NUM_JOINTS = 17
-        self.outmap_size = args().centermap_size
+        self.outmap_size = args.centermap_size
         params_num = self._result_parser.params_map_parser.params_num
         cam_dim = 3
         self.head_cfg = {'NUM_HEADS': 1, 'NUM_CHANNELS': 64, 'NUM_BASIC_BLOCKS': 2}
@@ -125,9 +125,9 @@ class ROMP(Base):
 
 if __name__ == '__main__':
     from config import args, ConfigContext, parse_args
-    with ConfigContext(parse_args()):
-        args().configs_yml = 'configs/basic_training_v1.yml'
-        args().model_version=1
+    with ConfigContext(parse_args):
+        args.configs_yml = 'configs/basic_training_v1.yml'
+        args.model_version=1
         from models.build import build_model
         model = build_model().cuda()
         outputs=model.feed_forward({'image':torch.rand(4,512,512,3).cuda()})

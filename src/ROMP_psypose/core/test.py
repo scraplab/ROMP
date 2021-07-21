@@ -11,12 +11,12 @@ class Demo(Base):
         self.model.eval()
         self.demo_dir = os.path.join(config.project_dir, 'demo')
         self.vis_size = [1024,1024,3]#[1920,1080]
-        if not args().webcam and '-1' not in self.gpu and self.save_video_results:
+        if not args.webcam and '-1' not in self.gpu and self.save_video_results:
             self.visualizer = Visualizer(resolution=self.vis_size, input_size=self.input_size,with_renderer=True)
         else:
             self.save_visualization_on_img = False
         if self.save_mesh:
-            self.smpl_faces = pickle.load(open(os.path.join(args().smpl_model_path,'smpl','SMPL_NEUTRAL.pkl'),'rb'), encoding='latin1')['f']
+            self.smpl_faces = pickle.load(open(os.path.join(args.smpl_model_path,'smpl','SMPL_NEUTRAL.pkl'),'rb'), encoding='latin1')['f']
         print('Initialization finished!')
 
     def run(self, image_folder):
@@ -86,7 +86,7 @@ class Demo(Base):
         return results
 
     def single_image_forward(self,image):
-        meta_data = img_preprocess(image, '0', input_size=args().input_size, single_img_input=True)
+        meta_data = img_preprocess(image, '0', input_size=args.input_size, single_img_input=True)
         if '-1' not in self.gpu:
             meta_data['image'] = meta_data['image'].cuda()
         outputs = self.net_forward(meta_data, cfg=self.demo_cfg)
@@ -128,7 +128,7 @@ class Demo(Base):
         if self.save_video_results:
             video_save_name = os.path.join(self.output_dir, video_basename+'_results.mp4')
             print('Writing results to {}'.format(video_save_name))
-            frames2video(result_frames, video_save_name, fps=args().fps_save)
+            frames2video(result_frames, video_save_name, fps=args.fps_save)
 
         return results
             
@@ -139,7 +139,7 @@ class Demo(Base):
         print('run on local')
         import keyboard
         from utils.demo_utils import OpenCVCapture, Image_Reader 
-        if 'tex' in args().webcam_mesh_color:
+        if 'tex' in args.webcam_mesh_color:
             from utils.demo_utils import vedo_visualizer as Visualizer
         else:
             from utils.demo_utils import Open3d_visualizer as Visualizer
@@ -164,7 +164,7 @@ class Demo(Base):
             counter.fps()
 
             if outputs is not None and outputs['detection_flag']:
-                if args().show_single:
+                if args.show_single:
                     verts = outputs['verts'].cpu().numpy()
                     verts = verts * 50 + np.array([0, 0, 100])
                     break_flag = visualizer.run(verts[0],frame)
@@ -218,19 +218,19 @@ class Time_counter():
         self.frame_num = 0
 
 # def main():
-#     with ConfigContext(parse_args()):
+#     with ConfigContext(parse_args):
 #         demo = Demo()
-#         if args().webcam:
+#         if args.webcam:
 #             print('Running the code on webcam demo')
-#             if args().run_on_remote_server:
+#             if args.run_on_remote_server:
 #                 demo.webcam_run_remote()
 #             else:
 #                 demo.webcam_run_local()
-#         elif args().video_or_frame:
-#             print('Running the code on video ',args().input_video_path)
-#             demo.process_video(args().input_video_path)
+#         elif args.video_or_frame:
+#             print('Running the code on video ',args.input_video_path)
+#             demo.process_video(args.input_video_path)
 #         else:
-#             demo_image_folder = args().demo_image_folder
+#             demo_image_folder = args.demo_image_folder
 #             if not os.path.exists(demo_image_folder):
 #                 print('Running the code on the demo images')
 #                 demo_image_folder = os.path.join(demo.demo_dir,'images')

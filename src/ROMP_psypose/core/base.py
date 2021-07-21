@@ -12,7 +12,7 @@ from torch.utils.data import Dataset, DataLoader, ConcatDataset
 from ROMP_psypose.core import _init_paths
 import config
 import constants
-from config import args, parse_args, ConfigContext
+from config import args #, parse_args, ConfigContext
 from models import build_model
 from utils import load_model, get_remove_keys, reorganize_items
 from utils.demo_utils import img_preprocess, convert_cam_to_3d_trans, save_meshes, get_video_bn
@@ -22,13 +22,13 @@ from evaluation import compute_error_verts, compute_similarity_transform, comput
 from dataset.mixed_dataset import SingleDataset
 from visualization.visualization import Visualizer
 # GradScaler never used
-# if args().model_precision=='fp16':
+# if args.model_precision=='fp16':
 #     from torch.cuda.amp import autocast, GradScaler
 
 class Base(object):
     def __init__(self):
         self.project_dir = config.project_dir
-        hparams_dict = self.load_config_dict(vars(args()))
+        hparams_dict = self.load_config_dict(vars(args))
         self._init_params()
 
     def _build_model_(self):

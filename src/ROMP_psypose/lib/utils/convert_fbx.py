@@ -336,7 +336,7 @@ if __name__ == '__main__':
             parser.add_argument('--person_id', type=int, default=0,
                                 help='Detected person ID to use for fbx animation')
 
-            args = parser.parse_args()
+            args = parser.parse_args
 
             input_path = args.input_path
             output_path = args.output_path
