@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, ConcatDataset
 
-import _init_paths
+from ROMP_psypose.core import _init_paths
 import config
 import constants
 from config import args, parse_args, ConfigContext

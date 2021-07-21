@@ -14,16 +14,16 @@ ARGS:
  model_precision: 'fp32'
  val_batch_size: 1
  nw: 4
- gmodel_path: '../trained_models/ROMP_hrnet32.pkl'
+ gmodel_path: 'ROMP_hrnet32.pkl'
 
  video_or_frame: True
- input_video_path: '../demo/videos/sample_video.mp4' # None
- output_dir: '../demo/videos/sample_video_results/'
+ #input_video_path: '../demo/videos/sample_video.mp4' # None
+ #output_dir: '../demo/videos/sample_video_results/'
  webcam_mesh_color: 'ghostwhite'  #'LightCyan'
  save_mesh: False
  save_centermap: False
- save_dict_results: True
- save_video_results: True
+ save_dict_results: False
+ save_video_results: False
  webcam: False
  fps_save: 30
  multiprocess: False

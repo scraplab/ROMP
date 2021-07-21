@@ -74,6 +74,8 @@ class Renderer:
         self.faces = faces
         self.orig_img = orig_img
         self.wireframe = wireframe
+        # this is a temporary line used in development. If you find it, feel free to delete it.
+        print(os.environ['PYOPENGL_PLATFORM'])
         self.renderer = pyrender.OffscreenRenderer(
             viewport_width=self.resolution[0],
             viewport_height=self.resolution[1],

@@ -1,4 +1,5 @@
-from base import *
+from ROMP_psypose.core.base import *
+from tqdm import tqdm
 
 class Demo(Base):
     def __init__(self):
@@ -10,7 +11,7 @@ class Demo(Base):
         self.model.eval()
         self.demo_dir = os.path.join(config.project_dir, 'demo')
         self.vis_size = [1024,1024,3]#[1920,1080]
-        if not args().webcam and '-1' not in self.gpu:
+        if not args().webcam and '-1' not in self.gpu and self.save_video_results:
             self.visualizer = Visualizer(resolution=self.vis_size, input_size=self.input_size,with_renderer=True)
         else:
             self.save_visualization_on_img = False
@@ -103,17 +104,18 @@ class Demo(Base):
             self.output_dir = video_file_path.replace(os.path.basename(video_file_path),'')
 
         results, result_frames = {}, []
-        for frame_id in range(video_length):
-            print('Processing video {}/{}'.format(frame_id, video_length))
+        print('----- Processing {} -----'.format(os.path.basename(video_file_path)))
+        for frame_id in tqdm(range(video_length)):
+            #print('Processing video {}/{}'.format(frame_id, video_length))
             frame = capture.read()
             with torch.no_grad():
                 outputs = self.single_image_forward(frame)
             vis_dict = {'image_org': outputs['meta_data']['image_org'].cpu()}
-            img_paths = [str(frame_id) for _ in range(1)]
+            img_paths = [int(frame_id) for _ in range(1)]
             single_batch_results = self.reorganize_results(outputs,img_paths,outputs['reorganize_idx'].cpu().numpy())
             results.update(single_batch_results)
-            vis_eval_results = self.visualizer.visulize_result_onorg(outputs['verts'], outputs['verts_camed'], vis_dict, reorganize_idx=outputs['reorganize_idx'].cpu().numpy())
-            result_frames.append(vis_eval_results[0])
+            #vis_eval_results = self.visualizer.visulize_result_onorg(outputs['verts'], outputs['verts_camed'], vis_dict, reorganize_idx=outputs['reorganize_idx'].cpu().numpy())
+            #result_frames.append(vis_eval_results[0])
             outputs['meta_data']['imgpath'] = img_paths
             if self.save_mesh:
                 save_meshes(outputs['reorganize_idx'].cpu().numpy(), outputs, self.output_dir, self.smpl_faces)
@@ -127,6 +129,8 @@ class Demo(Base):
             video_save_name = os.path.join(self.output_dir, video_basename+'_results.mp4')
             print('Writing results to {}'.format(video_save_name))
             frames2video(result_frames, video_save_name, fps=args().fps_save)
+
+        return results
             
     def webcam_run_local(self, video_file_path=None):
         '''
@@ -213,28 +217,28 @@ class Time_counter():
         self.runtime = 0
         self.frame_num = 0
 
-def main():
-    with ConfigContext(parse_args()):
-        demo = Demo()
-        if args().webcam:
-            print('Running the code on webcam demo')
-            if args().run_on_remote_server:
-                demo.webcam_run_remote()
-            else:
-                demo.webcam_run_local()
-        elif args().video_or_frame:
-            print('Running the code on video ',args().input_video_path)
-            demo.process_video(args().input_video_path)
-        else:
-            demo_image_folder = args().demo_image_folder
-            if not os.path.exists(demo_image_folder):
-                print('Running the code on the demo images')
-                demo_image_folder = os.path.join(demo.demo_dir,'images')
-            demo.run(demo_image_folder)
+# def main():
+#     with ConfigContext(parse_args()):
+#         demo = Demo()
+#         if args().webcam:
+#             print('Running the code on webcam demo')
+#             if args().run_on_remote_server:
+#                 demo.webcam_run_remote()
+#             else:
+#                 demo.webcam_run_local()
+#         elif args().video_or_frame:
+#             print('Running the code on video ',args().input_video_path)
+#             demo.process_video(args().input_video_path)
+#         else:
+#             demo_image_folder = args().demo_image_folder
+#             if not os.path.exists(demo_image_folder):
+#                 print('Running the code on the demo images')
+#                 demo_image_folder = os.path.join(demo.demo_dir,'images')
+#             demo.run(demo_image_folder)
 
 def estimate_pose(pose):
     input_video_path = pose.vid_path
     estimator = Demo()
     estimator.output_dir = pose.output_path
-    results = estimator.process_video(input_video_path)
+    results = estimator.process_video(video_file_path=input_video_path)
     return results

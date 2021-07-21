@@ -20,4 +20,3 @@ src/utils/bvh_utils.py
 *.DS_Store
 
 src/ROMP_psypose.egg-info
-venv

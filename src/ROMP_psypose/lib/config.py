@@ -16,7 +16,7 @@ model_dir = data_dir
 trained_model_dir = os.path.join(data_dir,'trained_models')
 
 time_stamp = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(int(round(time.time()*1000))/1000))
-yaml_timestamp = "configs/active_context_{}.yaml".format(time_stamp)
+yaml_timestamp = os.path.join(project_dir, 'src', 'ROMP_psypose', 'configs/active_context_{}.yaml').format(time_stamp)
 
 if torch.cuda.is_available():
     gpu_val = 0
@@ -27,7 +27,7 @@ else:
 def parse_args(input_args=None):
     parser = argparse.ArgumentParser(description = 'ROMP: Monocular, One-stage, Regression of Multiple 3D People')
     parser.add_argument('--tab',type = str,default = 'ROMP_v1',help = 'additional tabs')
-    parser.add_argument('--configs_yml',type = str,default = 'configs/single_image.yml',help = 'setting for training') #'configs/basic_training_v6_ld.yml' 
+    parser.add_argument('--configs_yml',type = str,default = os.path.join(project_dir, 'src', 'ROMP_psypose', 'configs', 'video.yml'),help = 'setting for training') #'configs/basic_training_v6_ld.yml'
     parser.add_argument('--demo_image_folder',type = str,default = 'None',help = 'absolute path to the image folder containing the input images for evaluation')
 
     mode_group = parser.add_argument_group(title='mode options')
@@ -105,6 +105,8 @@ def parse_args(input_args=None):
     with open(parsed_args.configs_yml) as file:
         configs_update = yaml.full_load(file)
     for key, value in configs_update['ARGS'].items():
+        if 'gmodel' in key:
+            value = os.path.join(trained_model_dir, value)
         if isinstance(value,str):
             exec("parsed_args.{} = '{}'".format(key, value))
         else:
@@ -144,20 +146,34 @@ class ConfigContext(object):
         # delete the yaml file
         self.clean()
 
+
 def args():
     # have to pass something or it'll try and read stdin, it should get overwritten on file load
-    parsed_args = parse_args(['--tab', 'ROMP_v1']) 
-    with open(ConfigContext.yaml_filename, 'r') as f:
-        argsdict = yaml.load(f, Loader=yaml.FullLoader)
+    parsed_args = parse_args(['--tab', 'ROMP_v1'])
+    # ConfigContext.parsed_args = parsed_args()
+    if os.path.exists(ConfigContext.yaml_filename):
+        with open(ConfigContext.yaml_filename, 'r') as f:
+            argsdict = yaml.load(f, Loader=yaml.FullLoader)
+    else:
+        # This will write a new Yaml if the yaml doesn't exist.
+        # configcontext.__forceyaml__(configcontext.yaml_filename)
+        with open(ConfigContext.yaml_filename, 'w') as f:
+
+            d = parsed_args.__dict__
+            yaml.dump(d, f)
+        with open(ConfigContext.yaml_filename, 'r') as f:
+            argsdict = yaml.load(f, Loader=yaml.FullLoader)
+
     for k, v in argsdict.items():
         parsed_args.__dict__[k] = v
     return parsed_args
 
-if __name__ == "__main__":
-    _args = parse_args()
-    with ConfigContext(_args):
-        with open(ConfigContext.yaml_filename, 'r') as f:
-            print(f.read())
-        for k, v in args().__dict__.items():
-            print(k, v)
-            assert _args.__dict__[k] == v
+
+_args = parse_args()
+with ConfigContext(_args):
+    # with open(ConfigContext.yaml_filename, 'r') as f:
+    #     print(f.read())
+    for k, v in args().__dict__.items():
+        # print(k, v)
+        assert _args.__dict__[k] == v
+
