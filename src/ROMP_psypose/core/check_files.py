@@ -20,7 +20,7 @@ def get_ROMP_files():
             os.mkdir(ROMP_DATA_DIR)
         dest_path = ROMP_DATA_DIR.joinpath('ROMP_data.zip')
         gdown.download(url, str(dest_path), quiet=False)
-        print("extracting {dest_path} ...".format(str(dest_path)))
+        print("Extracting ROMP files...")
         z = zipfile.ZipFile(str(dest_path))
         z.extractall(ROMP_DATA_DIR)
         print(f"removing {dest_path} ...")
