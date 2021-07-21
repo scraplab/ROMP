@@ -1,5 +1,7 @@
 from ROMP_psypose.core.base import *
 from tqdm import tqdm
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 class Demo(Base):
     def __init__(self):
@@ -20,7 +22,7 @@ class Demo(Base):
         print('Initialization finished!')
 
     def run(self, image_folder):
-        print('Processing {}, saving to {}'.format(image_folder, self.output_dir))
+        print('Processing {}'.format(image_folder))
         os.makedirs(self.output_dir, exist_ok=True)
         if '-1' not in self.gpu:
             self.visualizer.result_img_dir = self.output_dir 
@@ -98,7 +100,7 @@ class Demo(Base):
         capture = OpenCVCapture(video_file_path)
         video_length = int(capture.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         video_basename = get_video_bn(video_file_path)
-        print('Processing {}, saving to {}'.format(video_file_path, self.output_dir))
+        #print('Processing {}, saving to {}'.format(video_file_path, self.output_dir))
         os.makedirs(self.output_dir, exist_ok=True)
         if not os.path.isdir(self.output_dir):
             self.output_dir = video_file_path.replace(os.path.basename(video_file_path),'')
