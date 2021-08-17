@@ -10,20 +10,17 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, ConcatDataset
 
 from ROMP_psypose.core import _init_paths
-import config
+from ROMP_psypose.lib import config
 import constants
-from config import args #, parse_args, ConfigContext
-from models import build_model
-from utils import load_model, get_remove_keys, reorganize_items
-from utils.demo_utils import img_preprocess, convert_cam_to_3d_trans, save_meshes, get_video_bn
-from utils.projection import vertices_kp3d_projection
-from evaluation import compute_error_verts, compute_similarity_transform, compute_similarity_transform_torch, \
+from ROMP_psypose.lib.config import args #, parse_args, ConfigContext
+from ROMP_psypose.lib.models import build_model
+from ROMP_psypose.lib.utils import load_model, get_remove_keys, reorganize_items
+from ROMP_psypose.lib.utils.demo_utils import img_preprocess, convert_cam_to_3d_trans, save_meshes, get_video_bn
+from ROMP_psypose.lib.utils.projection import vertices_kp3d_projection
+from ROMP_psypose.lib.evaluation import compute_error_verts, compute_similarity_transform, compute_similarity_transform_torch, \
                     batch_compute_similarity_transform_torch, compute_mpjpe
-from dataset.mixed_dataset import SingleDataset
-from visualization.visualization import Visualizer
-# GradScaler never used
-# if args.model_precision=='fp16':
-#     from torch.cuda.amp import autocast, GradScaler
+from ROMP_psypose.lib.dataset.mixed_dataset import SingleDataset
+from ROMP_psypose.lib.visualization.visualization import Visualizer
 
 class Base(object):
     def __init__(self):
