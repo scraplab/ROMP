@@ -19,7 +19,6 @@ class Demo(Base):
             self.save_visualization_on_img = False
         if self.save_mesh:
             self.smpl_faces = pickle.load(open(os.path.join(args.smpl_model_path,'smpl','SMPL_NEUTRAL.pkl'),'rb'), encoding='latin1')['f']
-        print('Initialization finished!')
 
     def run(self, image_folder):
         print('Processing {}'.format(image_folder))
@@ -50,7 +49,7 @@ class Demo(Base):
                     print(test_iter,'/',len(internet_loader))
                 counter.start()   
 
-    def reorganize_results(self, outputs, img_paths, reorganize_idx, test_save_dir=None):
+    def reorganize_results(self, outputs, img_paths, reorganize_idx, test_save_dir=None, save_vertices=False):
         results = {}
         cam_results = outputs['params']['cam'].detach().cpu().numpy().astype(np.float16)
         smpl_pose_results = torch.cat([outputs['params']['global_orient'], outputs['params']['body_pose']],1).detach().cpu().numpy().astype(np.float16)
@@ -75,10 +74,11 @@ class Demo(Base):
                 results[img_path][subject_idx]['j3d_smpl24'] = kp3d_smpl24_results[batch_idx]
                 results[img_path][subject_idx]['j3d_spin24'] = kp3d_spin24_results[batch_idx]
                 results[img_path][subject_idx]['j3d_op25'] = kp3d_op25_results[batch_idx]
-                results[img_path][subject_idx]['verts'] = verts_results[batch_idx]
                 results[img_path][subject_idx]['pj2d'] = pj2d_results[batch_idx]
                 results[img_path][subject_idx]['pj2d_org'] = pj2d_org_results[batch_idx]
                 results[img_path][subject_idx]['trans'] = convert_cam_to_3d_trans(cam_results[batch_idx])
+                if save_vertices:
+                    results[img_path][subject_idx]['verts'] = verts_results[batch_idx]
 
         if test_save_dir is not None:
             for img_path, result_dict in results.items():
@@ -94,7 +94,7 @@ class Demo(Base):
         outputs = self.net_forward(meta_data, cfg=self.demo_cfg)
         return outputs
 
-    def process_video(self, video_file_path=None):
+    def process_video(self, video_file_path=None, save_vertices=False):
         import keyboard
         from utils.demo_utils import OpenCVCapture, frames2video
         capture = OpenCVCapture(video_file_path)
@@ -114,7 +114,7 @@ class Demo(Base):
                 outputs = self.single_image_forward(frame)
             vis_dict = {'image_org': outputs['meta_data']['image_org'].cpu()}
             img_paths = [int(frame_id) for _ in range(1)]
-            single_batch_results = self.reorganize_results(outputs,img_paths,outputs['reorganize_idx'].cpu().numpy())
+            single_batch_results = self.reorganize_results(outputs,img_paths,outputs['reorganize_idx'].cpu().numpy(), save_vertices=save_vertices)
             results.update(single_batch_results)
             #vis_eval_results = self.visualizer.visulize_result_onorg(outputs['verts'], outputs['verts_camed'], vis_dict, reorganize_idx=outputs['reorganize_idx'].cpu().numpy())
             #result_frames.append(vis_eval_results[0])
@@ -238,9 +238,9 @@ class Time_counter():
 #                 demo_image_folder = os.path.join(demo.demo_dir,'images')
 #             demo.run(demo_image_folder)
 
-def estimate_pose(pose):
+def estimate_pose(pose, save_vertices=False):
     input_video_path = pose.vid_path
     estimator = Demo()
     estimator.output_dir = pose.output_path
-    results = estimator.process_video(video_file_path=input_video_path)
+    results = estimator.process_video(video_file_path=input_video_path, save_vertices=save_vertices)
     return results
