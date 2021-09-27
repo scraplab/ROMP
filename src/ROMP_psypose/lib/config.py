@@ -10,7 +10,7 @@ from ROMP_psypose.core.check_files import ROMP_DATA_DIR
 
 data_dir = ROMP_DATA_DIR.joinpath('ROMP_data')
 code_dir = os.path.abspath(__file__).replace('config.py','') # lib
-project_dir = os.path.abspath(__file__).replace('/src/ROMP_psypose/lib/config.py','') # ROMP
+project_dir = os.path.abspath(__file__).replace('/lib/config.py','') # ROMP
 root_dir = project_dir.replace(project_dir.split('/')[-1],'')#os.path.abspath(__file__).replace('/CenterMesh/src/config.py','')
 model_dir = data_dir
 trained_model_dir = os.path.join(data_dir,'trained_models')
@@ -22,7 +22,7 @@ else:
     gpu_val = -1
 
 ROMP_pars = {'tab': 'hrnet_cm64_single_image_test',
-               'configs_yml': os.path.join(project_dir, 'src/configs/single_image.yml'),
+               #'configs_yml': os.path.join(project_dir, 'src/configs/single_image.yml'),
                #'demo_image_folder': '/path/to/image_folder',
                'local_rank': 0,
                'model_version': 1,
@@ -39,8 +39,10 @@ ROMP_pars = {'tab': 'hrnet_cm64_single_image_test',
                'centermap_size': 64,
                'deconv_num': 0,
                'model_precision': 'fp32',
-               'backbone': 'hrnet',
-               'gmodel_path': os.path.join(trained_model_dir, 'ROMP_hrnet32.pkl'),
+               #'backbone': 'hrnet',
+               'backbone': 'resnet',
+               #'gmodel_path': os.path.join(trained_model_dir, 'ROMP_hrnet32.pkl'),
+               'gmodel_path': os.path.join(trained_model_dir, 'ROMP_resnet50.pkl'),
                'print_freq': 50,
                'fine_tune': True,
                'gpu': str(gpu_val),
@@ -76,7 +78,7 @@ ROMP_pars = {'tab': 'hrnet_cm64_single_image_test',
                'save_centermap': False, # What is the centermap?
                'save_dict_results': False,
                'save_video_results': False,
-               'multiprocess': False}
+               'multiprocess': True}
 
 class load_args:
     def __init__(self, **entries):
