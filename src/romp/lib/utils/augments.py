@@ -1,7 +1,7 @@
 import imgaug as ia
 import imgaug.augmenters as iaa
-from imgaug.augmenters import compute_paddings_to_reach_aspect_ratio, Crop, Pad
-from imgaug.augmentables import Keypoint, KeypointsOnImage
+from imgaug.augmenters.size import compute_paddings_to_reach_aspect_ratio, Crop, Pad
+from imgaug.augmentables.kps import Keypoint, KeypointsOnImage
 
 import random
 import cv2
