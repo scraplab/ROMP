@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-setup(name='ROMP_psypose',
-      version='0.0.1',
+setup(name='romp',
+      version='0.0.2',
       description='Modularized version of ROMP for use in the PsyPose package.',
       url='https://github.com/Arthur151/ROMP',
       author='SCRAP Lab',
