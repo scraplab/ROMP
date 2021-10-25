@@ -1,7 +1,6 @@
-demo/videos
-demo/animation
-demo/*_results
-trained_models
+src/demo/videos
+src/demo/animation
+src/demo/*_results
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -11,6 +10,7 @@ __pycache__/
 *.fbx
 *.zip
 .vscode
+.idea
 model_data/
-active_configs
-romp/lib/models/nvxia.py
+src/active_configs
+src/romp/lib/models/nvxia.py
