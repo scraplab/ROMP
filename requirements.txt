@@ -16,7 +16,7 @@ keyboard
 transforms3d
 bvhtoolbox
 vedo
-imgaug
+imgaug @ git+https://github.com/aleju/imgaug.git
 lap
 tensorboard
 smplx
