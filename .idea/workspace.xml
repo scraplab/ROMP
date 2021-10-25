@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="040785ab-bb6a-4cdf-bcfd-fd5265564e46" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/active_configs/Hi.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/eval_3dpw_challenge.yml" beforeDir="false" />
@@ -37,7 +36,6 @@
       <change beforePath="$PROJECT_DIR$/docs/train.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/updates.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/visualization.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/romp/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/romp/_init_paths_.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/romp/base.py" beforeDir="false" />
