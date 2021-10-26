@@ -6,16 +6,17 @@ import torch
 import yaml
 import logging
 import time
-import platform 
+import platform
+from romp.lib.utils.check_files import ROMP_DATA_DIR
 
 currentfile = os.path.abspath(__file__)
-code_dir = currentfile.replace('config.py','')
-project_dir = currentfile.replace('/romp/lib/config.py','')
-source_dir = currentfile.replace('/lib/config.py','')
-root_dir = project_dir.replace(project_dir.split('/')[-1],'')
+code_dir = currentfile.replace('config.py','') # lib directory
+project_dir = currentfile.replace('/romp/lib/config.py','') # src directory
+source_dir = currentfile.replace('/lib/config.py','') # romp directory
+root_dir = project_dir.replace(project_dir.split('/')[-1],'') # ROMP directory
 
 time_stamp = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(int(round(time.time()*1000))/1000))
-yaml_timestamp = os.path.abspath(os.path.join( project_dir, "active_configs/active_context_{}.yaml".format(time_stamp).replace(":","_")))
+yaml_timestamp = os.path.abspath(os.path.join(source_dir, "active_configs/active_context_{}.yaml".format(time_stamp).replace(":","_")))
 
 plt = platform.system()
 if plt == "Windows":
@@ -24,17 +25,16 @@ if plt == "Windows":
     root_dir = project_dir.replace(project_dir.split('\\')[-1],'')
     yaml_timestamp = os.path.abspath(os.path.join( source_dir + "active_configs\\active_context_{}.yaml".format(time_stamp.replace(":","_"))))
 
-model_dir = os.path.join(project_dir,'model_data')
-trained_model_dir = os.path.join(project_dir,'trained_models')
+model_dir = os.path.join(code_dir,'model_data')
+trained_model_dir = ROMP_DATA_DIR.joinpath(project_dir,'trained_models')
 
 print("yaml_timestamp ", yaml_timestamp)
-
 
 def parse_args(input_args=None):
 
     parser = argparse.ArgumentParser(description = 'ROMP: Monocular, One-stage, Regression of Multiple 3D People')
     parser.add_argument('--tab', type = str, default = 'ROMP_v1', help = 'additional tabs')
-    parser.add_argument('--configs_yml', type = str, default = os.path.join(project_dir,'configs/v1.yml'), help = 'settings') 
+    parser.add_argument('--configs_yml', type = str, default = os.path.join(source_dir,'configs/v1.yml'), help = 'settings')
     parser.add_argument('--inputs', type = str, help = 'path to inputs') 
     parser.add_argument('--output_dir', type = str, help = 'path to save outputs') 
     parser.add_argument('--interactive_vis',action='store_true',help = 'whether to show the results in an interactive mode')
@@ -80,8 +80,8 @@ def parse_args(input_args=None):
     model_group.add_argument('--head_block_num',type = int,default = 2,help = 'number of conv block in head')
     model_group.add_argument('--merge_smpl_camera_head',type = bool,default = False)
     model_group.add_argument('--use_coordmaps',type = bool,default = True,help = 'use the coordmaps')
-    model_group.add_argument('--hrnet_pretrain', type=str, default= os.path.join(project_dir,'trained_models/pretrain_hrnet.pkl'))
-    model_group.add_argument('--resnet_pretrain', type=str, default= os.path.join(project_dir,'trained_models/pretrain_resnet.pkl'))
+    model_group.add_argument('--hrnet_pretrain', type=str, default= os.path.join(trained_model_dir,'pretrain_hrnet.pkl'))
+    model_group.add_argument('--resnet_pretrain', type=str, default= os.path.join(trained_model_dir, 'pretrain_resnet.pkl'))
 
     loss_group = parser.add_argument_group(title='loss options')
     # loss settings
@@ -177,7 +177,7 @@ def parse_args(input_args=None):
     parsed_args = parser.parse_args(args=input_args)
     parsed_args.adjust_lr_epoch = []
     parsed_args.kernel_sizes = [5]
-    config_yml_path = os.path.join(project_dir, parsed_args.configs_yml)
+    config_yml_path = os.path.join(source_dir, parsed_args.configs_yml)
     with open(config_yml_path) as file:
         configs_update = yaml.full_load(file)
     

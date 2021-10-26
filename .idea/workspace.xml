@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="040785ab-bb6a-4cdf-bcfd-fd5265564e46" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/active_configs/Hi.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/eval_3dpw_challenge.yml" beforeDir="false" />
@@ -193,6 +194,55 @@
       <change beforePath="$PROJECT_DIR$/scripts/video.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/webcam.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/webcam_blender.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_3dpw_challenge.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_3dpw_test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_3dpw_test_ft.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_3dpw_test_resnet.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_3dpw_test_resnet_ft.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_cmu_panoptic.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_crowdpose_test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/eval_crowdpose_val.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/image.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/v1.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/v1_hrnet_3dpw_ft.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/v1_resnet.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/v1_resnet_3dpw_ft.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/video-batch.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/video.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/webcam.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/webcam_blender.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/demo/images/Leo_Messi.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/batch_videos.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/bugs.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/config_guide.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/dataset.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/evaluation.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/export.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/installation.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/train.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/updates.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/visualization.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/romp/lib/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/romp/lib/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/V1_hrnet_3dpwft.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/V1_resnet_3dpwft.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/V1_train.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/V1_train_resnet.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/export_fbx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/image.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/launch_vis_server.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/pretrain.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/setup.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/test.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/test_3dpwchallenge.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/train_distributed.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/video.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/webcam.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/webcam_blender.sh" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,6 +309,7 @@
       <workItem from="1634760206384" duration="481000" />
       <workItem from="1634761851551" duration="304000" />
       <workItem from="1635189419807" duration="838000" />
+      <workItem from="1635282715925" duration="1196000" />
     </task>
     <servers />
   </component>
