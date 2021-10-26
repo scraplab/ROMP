@@ -10,7 +10,7 @@ __pycache__/
 *.fbx
 *.zip
 .vscode
-.idea
+.idea/
 model_data/
 src/active_configs
 src/romp/lib/models/nvxia.py
