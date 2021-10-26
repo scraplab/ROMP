@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-setup(name='romp',
+setup(name='romp_psypose',
       version='0.0.2',
       description='Modularized version of ROMP for use in the PsyPose package.',
       url='https://github.com/Arthur151/ROMP',
