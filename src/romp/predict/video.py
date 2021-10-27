@@ -1,8 +1,8 @@
 import sys 
 whether_set_yml = ['configs_yml' in input_arg for input_arg in sys.argv]
 if sum(whether_set_yml)==0:
-    default_webcam_configs_yml = "--configs_yml=configs/video.yml"
-    print('No configs_yml is set, set it to the default {}'.format(default_webcam_configs_yml))
+    default_webcam_configs_yml = "--configs_yml=configs/multiperson_tracking.yml"
+    #print('No configs_yml is set, set it to the default {}'.format(default_webcam_configs_yml))
     sys.argv.append(default_webcam_configs_yml)
 from .image import *
 import keyboard
