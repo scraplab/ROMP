@@ -26,3 +26,4 @@ open3d
 addict
 loguru
 norfair
+pytorch3d

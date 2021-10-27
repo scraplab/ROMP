@@ -7,7 +7,7 @@ if sum(whether_set_yml)==0:
 from .image import *
 import keyboard
 from utils.demo_utils import frames2video, video2frame
-#from tracking.tracker import Tracker
+from tracking.tracker import Tracker
 from norfair import Detection, Tracker, Video, draw_tracked_objects
 import norfair
 from utils.temporal_optimization import create_OneEuroFilter, temporal_optimize_result
