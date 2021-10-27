@@ -25,7 +25,7 @@ if plt == "Windows":
     root_dir = project_dir.replace(project_dir.split('\\')[-1],'')
     yaml_timestamp = os.path.abspath(os.path.join( source_dir + "active_configs\\active_context_{}.yaml".format(time_stamp.replace(":","_"))))
 
-model_dir = os.path.join(code_dir,'model_data')
+model_dir = ROMP_DATA_DIR.joinpath(project_dir,'trained_models')
 trained_model_dir = ROMP_DATA_DIR.joinpath(project_dir,'trained_models')
 
 print("yaml_timestamp ", yaml_timestamp)

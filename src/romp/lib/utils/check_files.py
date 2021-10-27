@@ -7,9 +7,7 @@ import traceback
 from pathlib import Path
 import gdown
 
-
-gdrive_id = '1Ss-VAIJHiLVosevgbp6XqtaZOoNeWqEx' # zipped version
-#gdrive_id = '1WHCzif8qt9iNj9l26FnECbQMRqK3mWJa' # link to  ROMP pretrained models
+gdrive_id = '1sYzcUsv5XVCwkWg6FKVtKmq0gaSzEcf1'
 ROMP_DATA_DIR = Path('~/.ROMP').expanduser()
 needs_download = False
 

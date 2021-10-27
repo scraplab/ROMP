@@ -12,7 +12,7 @@ ARGS:
  centermap_conf_thresh: 0.25
 
  make_tracking: True
- temporal_optimization: False
+ temporal_optimization: True
  smooth_coeff: 4.
  show_largest_person_only: False
  show_mesh_stand_on_image: False
