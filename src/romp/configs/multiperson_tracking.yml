@@ -11,6 +11,8 @@ ARGS:
  smpl_mesh_root_align: False
  centermap_conf_thresh: 0.25
 
+ collect_subdirs: False
+
  make_tracking: True
  temporal_optimization: True
  smooth_coeff: 4.
