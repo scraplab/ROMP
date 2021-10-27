@@ -25,8 +25,8 @@ if plt == "Windows":
     root_dir = project_dir.replace(project_dir.split('\\')[-1],'')
     yaml_timestamp = os.path.abspath(os.path.join( source_dir + "active_configs\\active_context_{}.yaml".format(time_stamp.replace(":","_"))))
 
-model_dir = ROMP_DATA_DIR.joinpath(project_dir,'trained_models')
-trained_model_dir = ROMP_DATA_DIR.joinpath(project_dir,'trained_models')
+model_dir = ROMP_DATA_DIR.joinpath('trained_models')
+trained_model_dir = ROMP_DATA_DIR.joinpath('trained_models')
 
 print("yaml_timestamp ", yaml_timestamp)
 
@@ -163,12 +163,12 @@ def parse_args(input_args=None):
     smpl_group.add_argument('--cam_dim',type = int,default = 3, help = 'the dimention of camera param')
     smpl_group.add_argument('--beta_dim',type = int,default = 10, help = 'the dimention of SMPL shape param, beta')
     smpl_group.add_argument('--smpl_joint_num',type = int,default = 22, help = 'joint number of SMPL model we estimate')
-    smpl_group.add_argument('--smpl_model_path',type = str,default = os.path.join(model_dir,'parameters'),help = 'smpl model path')
-    smpl_group.add_argument('--smpl_J_reg_h37m_path',type = str,default = os.path.join(model_dir, 'parameters', 'J_regressor_h36m.npy'),help = 'SMPL regressor for 17 joints from H36M datasets')
-    smpl_group.add_argument('--smpl_J_reg_extra_path',type = str,default = os.path.join(model_dir, 'parameters', 'J_regressor_extra.npy'),help = 'SMPL regressor for 9 extra joints from different datasets')
+    smpl_group.add_argument('--smpl_model_path',type = str,default = os.path.join(model_dir), help = 'smpl model path')
+    smpl_group.add_argument('--smpl_J_reg_h37m_path',type = str,default = os.path.join(model_dir, 'J_regressor_h36m.npy'),help = 'SMPL regressor for 17 joints from H36M datasets')
+    smpl_group.add_argument('--smpl_J_reg_extra_path',type = str,default = os.path.join(model_dir, 'J_regressor_extra.npy'),help = 'SMPL regressor for 9 extra joints from different datasets')
     
-    smpl_group.add_argument('--smpl_uvmap',type = str,default = os.path.join(model_dir, 'parameters', 'smpl_vt_ft.npz'),help = 'smpl UV Map coordinates for each vertice')
-    smpl_group.add_argument('--wardrobe', type = str, default=os.path.join(model_dir, 'wardrobe'), help = 'path of smpl UV textures')
+    smpl_group.add_argument('--smpl_uvmap',type = str,default = os.path.join(model_dir, 'smpl_vt_ft.npz'),help = 'smpl UV Map coordinates for each vertice')
+    smpl_group.add_argument('--wardrobe', type = str, default=os.path.join(model_dir), help = 'path of smpl UV textures')
     smpl_group.add_argument('--mesh_cloth',type = str,default = '031',help = 'pick up cloth from the wardrobe or simplely use a single color')
 
     debug_group = parser.add_argument_group(title='Debug options')
