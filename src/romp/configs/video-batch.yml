@@ -14,7 +14,7 @@ ARGS:
  model_precision: 'fp32'
  val_batch_size: 1
  nw: 4
- model_path: trained_models/ROMP_HRNet32_V1.pkl #  '../trained_models/ROMP_ResNet50_V1.pkl'
+ model_path: ROMP_HRNet32_V1.pkl #  '../trained_models/ROMP_ResNet50_V1.pkl'
  smpl_mesh_root_align: False
 
  video_or_frame: True

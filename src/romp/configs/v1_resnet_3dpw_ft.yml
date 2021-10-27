@@ -37,7 +37,7 @@ ARGS:
  centermap_size: 64
  centermap_conf_thresh: 0.2
 
- model_path: trained_models/ROMP_ResNet50_V1.pkl
+ model_path: ROMP_ResNet50_V1.pkl
 
 loss_weight:
   MPJPE: 200.

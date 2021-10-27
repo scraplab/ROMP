@@ -16,5 +16,5 @@ ARGS:
  centermap_conf_thresh: 0.2
  smpl_mesh_root_align: True
 
- model_path: trained_models/ROMP_ResNet50_V1.pkl
+ model_path: ROMP_ResNet50_V1.pkl
  dataset_rootdir: '/media/yusun/Extreme SSD/dataset' #'/path/to/dataset/3DPW'

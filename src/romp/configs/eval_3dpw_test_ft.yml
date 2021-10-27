@@ -17,5 +17,5 @@ ARGS:
  model_precision: 'fp32'
  smpl_mesh_root_align: False
 
- model_path: trained_models/ROMP_HRNet32_V1_ft_3DPW.pkl
+ model_path: ROMP_HRNet32_V1_ft_3DPW.pkl
  dataset_rootdir: '/media/yusun/Extreme SSD/dataset' #'/path/to/dataset/3DPW'
