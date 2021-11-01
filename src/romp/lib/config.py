@@ -125,7 +125,7 @@ def parse_args(input_args=None):
     log_group = parser.add_argument_group(title='log options')
     # basic log settings
     log_group.add_argument('--print_freq', type = int, default = 50, help = 'training epochs')
-    log_group.add_argument('--model_path',type = str,default = '',help = 'trained model path')
+    log_group.add_argument('--model_path',type = str,default = os.path.join(trained_model_path, 'ROMP_HRNet32_V1.pkl'),help = 'trained model path')
     log_group.add_argument('--log-path', type = str, default = os.path.join(root_dir,'log/'), help = 'Path to save log file')
 
     hm_ae_group = parser.add_argument_group(title='learning 2D pose/associate embeddings options')
