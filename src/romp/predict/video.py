@@ -55,6 +55,7 @@ class Video_processor(Image_processor):
 
         if self.make_tracking:
             #tracker = Tracker()
+            print("Tracking enabled!")
             tracker = Tracker(distance_function=euclidean_distance, distance_threshold=30)
             
         if self.temporal_optimization:
