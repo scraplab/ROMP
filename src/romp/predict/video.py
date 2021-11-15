@@ -102,7 +102,7 @@ class Video_processor(Image_processor):
                     for sid, tid in enumerate(video_track_ids[frame_id]):
                         if self.temporal_optimization:
                             if tid not in filter_dict:
-                                filter_dict[tid] = create_OneEuroFilter(args().smooth_coeff)
+                                filter_dict[tid] = create_OneEuroFilter(4.0) # or args().smooth_coeff
                             results_track[frame_id][sid] = temporal_optimize_result(results_track[frame_id][sid], filter_dict[tid])
                         
                         for item in item_names:

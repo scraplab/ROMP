@@ -14,3 +14,4 @@ __pycache__/
 model_data/
 src/active_configs
 src/romp/lib/models/nvxia.py
+src/romp_psypose.egg-info/

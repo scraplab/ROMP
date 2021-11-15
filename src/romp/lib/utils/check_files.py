@@ -26,7 +26,6 @@ def get_ROMP_files():
         if not os.path.exists(str(ROMP_DATA_DIR)):
             os.mkdir(ROMP_DATA_DIR)
         dest_path = ROMP_DATA_DIR.joinpath('trained_models.zip')
-        print("Downloading pretrained ROMP models...")
         gdown.download(url, str(dest_path), quiet=False)
         print('Extracting files...')
         z = zipfile.ZipFile(str(dest_path))
