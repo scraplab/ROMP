@@ -30,6 +30,8 @@ class Video_processor(Image_processor):
 
     @torch.no_grad()
     def process_video(self, video_file_path():
+        if self.show_largest_person_only:
+            print('Showing largest person only!')
 
         if os.path.isdir(video_file_path):
             frame_list = collect_image_list(image_folder=video_file_path, collect_subdirs=False, img_exts=constants.img_exts)
