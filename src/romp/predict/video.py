@@ -19,17 +19,19 @@ class Video_processor(Image_processor):
         super(Video_processor, self).__init__(**kwargs)
 
     @staticmethod
-    def toframe(video_file_path, frame_save_dir_loc=''):
+    def toframe(video_file_path):
         assert isinstance(video_file_path, str), \
             print('We expect the input video file path is str, while recieved {}'.format(video_file_path))
         video_basename, video_ext = os.path.splitext(video_file_path)
         assert video_ext in constants.video_exts, \
             print('Video format {} is not currently supported, please convert it to the frames by yourself.'.format(video_ext))
-        frame_list = video2frame(video_file_path, frame_save_dir=os.path.join(frame_save_dir_loc, video_basename+'_frames'))
+        frame_list, frame_save_dir = video2frame(video_file_path, frame_save_dir=os.path.join(self.frame_save_dir_loc, video_basename+'_frames'))
         return video_basename, frame_list, frame_save_dir
 
     @torch.no_grad()
-    def process_video(self, video_file_path):
+    def process_video(self, video_file_path, frame_save_dir_loc=''):
+        self.frame_save_dir_loc = frame_save_dir_loc
+
         if self.show_largest_person_only:
             print('Showing largest person only!')
 
