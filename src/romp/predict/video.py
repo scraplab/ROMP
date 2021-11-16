@@ -25,12 +25,11 @@ class Video_processor(Image_processor):
         video_basename, video_ext = os.path.splitext(video_file_path)
         assert video_ext in constants.video_exts, \
             print('Video format {} is not currently supported, please convert it to the frames by yourself.'.format(video_ext))
-        frame_list, frame_save_dir = video2frame(video_file_path, frame_save_dir=os.path.join(self.frame_save_dir_loc, video_basename+'_frames'))
-        return video_basename, frame_list, frame_save_dir
+        frame_list = video2frame(video_file_path, frame_save_dir=video_basename+'_frames')
+        return video_basename, frame_list
 
     @torch.no_grad()
-    def process_video(self, video_file_path, frame_save_dir_loc=''):
-        self.frame_save_dir_loc = frame_save_dir_loc
+    def process_video(self, video_file_path):
 
         if self.show_largest_person_only:
             print('Showing largest person only!')

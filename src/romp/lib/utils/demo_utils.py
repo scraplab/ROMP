@@ -95,8 +95,6 @@ class Time_counter():
         self.frame_num = 0
 
 def video2frame(video_name, frame_save_dir=None):
-    if not frame_save_dir:
-        frame_save_dir = '.'
     cap = OpenCVCapture(video_name)
     os.makedirs(frame_save_dir, exist_ok=True)
     frame_list = []
@@ -105,7 +103,7 @@ def video2frame(video_name, frame_save_dir=None):
         save_path = os.path.join(frame_save_dir, '{:06d}.jpg'.format(frame_id))
         cv2.imwrite(save_path, frame)
         frame_list.append(save_path)
-    return frame_list, frame_save_dir
+    return frame_list
 
 def frames2video(images_path, video_name,fps=30):
     writer = imageio.get_writer(video_name, format='mp4', mode='I', fps=fps)
