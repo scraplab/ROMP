@@ -174,7 +174,6 @@ class Video_processor(Image_processor):
             video_save_name = os.path.join(self.output_dir, video_basename+'_soi_results.mp4')
             print('Writing results to {}'.format(video_save_name))
             frames2video(stand_on_imgs_frames, video_save_name, fps=self.fps_save)
-        shutil.rmtree(frame_dir)
         return results_frames
 
 
