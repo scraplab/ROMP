@@ -12,29 +12,31 @@ from norfair import Detection, Tracker, Video, draw_tracked_objects
 import norfair
 from utils.temporal_optimization import create_OneEuroFilter, temporal_optimize_result
 import itertools
+import shutil
 
 class Video_processor(Image_processor):
     def __init__(self, **kwargs):
         super(Video_processor, self).__init__(**kwargs)
 
     @staticmethod
-    def toframe(video_file_path):
+    def toframe(video_file_path, frame_save_dir_loc=''):
         assert isinstance(video_file_path, str), \
             print('We expect the input video file path is str, while recieved {}'.format(video_file_path))
         video_basename, video_ext = os.path.splitext(video_file_path)
         assert video_ext in constants.video_exts, \
             print('Video format {} is not currently supported, please convert it to the frames by yourself.'.format(video_ext))
-        frame_list = video2frame(video_file_path, frame_save_dir=video_basename+'_frames')
-        return video_basename, frame_list
+        frame_list = video2frame(video_file_path, frame_save_dir=os.path.join(frame_save_dir_loc, video_basename+'_frames'))
+        return video_basename, frame_list, frame_save_dir
 
     @torch.no_grad()
-    def process_video(self, video_file_path):
+    def process_video(self, video_file_path():
+
         if os.path.isdir(video_file_path):
             frame_list = collect_image_list(image_folder=video_file_path, collect_subdirs=False, img_exts=constants.img_exts)
             frame_list = sorted(frame_list)
             video_basename = video_file_path
         elif os.path.exists(video_file_path):
-            video_basename, frame_list = self.toframe(video_file_path)
+            video_basename, frame_list, frame_dir = self.toframe(video_file_path)
         else:
             raise('{} not exists!'.format(video_file_path))
         print('Processing {} frames of video {}, saving to {}'.format(len(frame_list), video_basename, self.output_dir))
@@ -55,7 +57,6 @@ class Video_processor(Image_processor):
 
         if self.make_tracking:
             #tracker = Tracker()
-            print("Tracking enabled!")
             tracker = Tracker(distance_function=euclidean_distance, distance_threshold=30)
             
         if self.temporal_optimization:
@@ -173,6 +174,7 @@ class Video_processor(Image_processor):
             video_save_name = os.path.join(self.output_dir, video_basename+'_soi_results.mp4')
             print('Writing results to {}'.format(video_save_name))
             frames2video(stand_on_imgs_frames, video_save_name, fps=self.fps_save)
+        shutil.rmtree(frame_dir)
         return results_frames
 
 

@@ -5,7 +5,7 @@ ARGS:
 
  backbone: 'hrnet'
  model_precision: 'fp32'
- val_batch_size: 8
+ val_batch_size: 1
  nw: 4
  model_path: ROMP_HRNet32_V1.pkl #  '../trained_models/ROMP_ResNet50_V1.pkl'
  smpl_mesh_root_align: False
@@ -15,7 +15,7 @@ ARGS:
 
  make_tracking: True
  temporal_optimization: True
- smooth_coeff: 4.
+ smooth_coeff: 4.0
  show_largest_person_only: False
  show_mesh_stand_on_image: False
  soi_camera: 'far' # 'close' # 'far'
